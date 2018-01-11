@@ -1,0 +1,29 @@
+{
+    "name": "heropoo/write-doc",
+    "description": "write",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Heropoo",
+            "email": "aiyouyou1000@163.com"
+        },
+        {
+            "name": "南丞_",
+            "email": "lampxiezi@163.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "heropoo/routing": "dev-master",
+        "illuminate/database": "~5.0",
+        "filp/whoops": "*",
+        "monolog/monolog": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "": "libraries/",
+            "App\\": "app/"
+        }
+    }
+}
