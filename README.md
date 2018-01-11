@@ -1,7 +1,7 @@
 # WriteDoc 
 [English](./README-EN.md)
 
-![](https://img.shields.io/apm/l/vim-mode.svg)
+[![](https://img.shields.io/apm/l/vim-mode.svg)](./LICENSE)
 [![GitHub forks](https://img.shields.io/github/forks/badges/shields.svg?style=social&label=Fork)](https://github.com/Evil-S0ul/write-doc)
 [![GitHub stars](https://img.shields.io/github/stars/badges/shields.svg?style=social&label=Stars)](https://github.com/Evil-S0ul/write-doc)
 [![GitHub watchers](https://img.shields.io/github/watchers/badges/shields.svg?style=social&label=Watch)](https://github.com/Evil-S0ul/write-doc)
