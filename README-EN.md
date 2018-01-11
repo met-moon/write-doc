@@ -1,5 +1,6 @@
-# WriteDoc 
-[English](./README-EN.md)
+# WriteDoc
+
+[中文文档](./README.md)
 
 ![](https://img.shields.io/apm/l/vim-mode.svg)
 [![GitHub forks](https://img.shields.io/github/forks/badges/shields.svg?style=social&label=Fork)](https://github.com/Evil-S0ul/write-doc)
