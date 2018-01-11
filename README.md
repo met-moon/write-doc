@@ -1,2 +1,3 @@
-# write-doc
-A document write or manager project
+# WriteDoc 
+[English](./README-EN.md)
+
