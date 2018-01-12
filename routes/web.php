@@ -6,9 +6,7 @@
  * Time: 22:05
  */
 
-Route::get('/', function (){
-    return 'welcome';
-});
+Route::get('/', 'IndexController::index');
 
 Route::get('login', 'IndexController::login');
 

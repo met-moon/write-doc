@@ -11,6 +11,9 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouteCollection;
+use Whoops\Handler\JsonResponseHandler;
+use Whoops\Handler\PrettyPageHandler;
+use Whoops\Run;
 
 /**
  * Class Application
@@ -67,9 +70,22 @@ class Application
 
         $this->init();
 
+        $this->request = Request::createFromGlobals();
+
+        $this->handleError();
+
         require_once __DIR__ . '/helpers.php';
 
         \Moon::$app = $this;
+    }
+
+    protected function handleError(){
+        $whoops = new Run();
+        $whoops->pushHandler(new PrettyPageHandler());
+        if($this->request->isXmlHttpRequest()){
+            $whoops->pushHandler(new JsonResponseHandler());
+        }
+        $whoops->register();
     }
 
     protected function init()
@@ -113,8 +129,6 @@ class Application
 
     public function run()
     {
-        $this->request = Request::createFromGlobals();
-
         $this->router = new Router(null, [
             'namespace' => 'App\\Controllers',
             //'middleware'=>['sessionStart'],
@@ -125,10 +139,8 @@ class Application
 
         $routes = $this->router->getRoutes();
 
-        $request = Request::createFromGlobals();
-
         try {
-            $response = $this->resolveRequest($request, $routes);
+            $response = $this->resolveRequest($this->request, $routes);
         } catch (ResourceNotFoundException $e) {
             $response = $this->makeResponse($e->getMessage(), 404);
         } catch (MethodNotAllowedException $e) {

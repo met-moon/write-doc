@@ -12,6 +12,10 @@ use Moon\Controller;
 
 class IndexController extends Controller
 {
+    public function index(){
+        return 'welcome';
+    }
+
     public function say(){
         return [
             'aa'=>'11'

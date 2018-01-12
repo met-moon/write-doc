@@ -17,8 +17,8 @@
         "php": ">=7.0",
         "heropoo/routing": "dev-master",
         "illuminate/database": "~5.5",
-        "filp/whoops": "*",
-        "monolog/monolog": "*"
+        "monolog/monolog": "*",
+        "filp/whoops": "^2.1"
     },
     "autoload": {
         "psr-4": {
