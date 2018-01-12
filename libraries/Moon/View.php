@@ -9,8 +9,6 @@
 namespace Moon;
 
 
-use Symfony\Component\HttpFoundation\Response;
-
 class View
 {
     protected $viewPath;

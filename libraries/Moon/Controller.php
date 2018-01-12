@@ -24,7 +24,7 @@ class Controller
         if(is_null($this->view) || !$this->view instanceof View){
 
             if(is_null($this->viewPath)){
-                $this->viewPath = Moon::$app->getAppPath().'/views';
+                $this->viewPath = \Moon::$app->getAppPath().'/views';
             }else{
                 if(!is_dir($this->viewPath)){
                     throw new Exception("Directory '$this->viewPath' is not exists!");

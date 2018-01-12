@@ -7,6 +7,7 @@
  */
 namespace App\Controllers;
 
+use App\Models\User;
 use Moon\Controller;
 
 class IndexController extends Controller
@@ -15,5 +16,15 @@ class IndexController extends Controller
         return [
             'aa'=>'11'
         ];
+    }
+
+    public function login(){
+
+        /*$id = request('id', 1);
+
+        $user = new User();
+        $list = $user->where('id', $id)->get();
+        dd($id, $list->toArray());*/
+        return $this->render('login');
     }
 }

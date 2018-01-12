@@ -14,9 +14,9 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0",
+        "php": ">=7.0",
         "heropoo/routing": "dev-master",
-        "illuminate/database": "~5.0",
+        "illuminate/database": "~5.5",
         "filp/whoops": "*",
         "monolog/monolog": "*"
     },
