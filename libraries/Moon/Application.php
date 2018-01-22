@@ -86,19 +86,21 @@ class Application
     {
         $logger = new Logger('app');
         $whoops = new Run();
-        if($this->debug) {
-            $whoops->pushHandler(new PrettyPageHandler());
+        if ($this->debug) {
             if ($this->request->isXmlHttpRequest()) {
                 $whoops->pushHandler(new JsonResponseHandler());
+            } else {
+                $handler = new PrettyPageHandler();
+                $handler->setPageTitle('Moon App');
+                $whoops->pushHandler($handler);
             }
-        }else{
-            $handler = new PlainTextHandler($logger);
-            $handler->loggerOnly(true);
-            $whoops->pushHandler($handler);
         }
+        $handler = new PlainTextHandler($logger);
+        $handler->loggerOnly(true);
+        $whoops->pushHandler($handler);
         $whoops->register();
 
-        $filename = $this->rootPath.'/runtime/logs/app-'.date('Y-m-d').'.log';
+        $filename = $this->rootPath . '/runtime/logs/app-' . date('Y-m-d') . '.log';
         $logger->pushHandler(new StreamHandler($filename, Logger::ERROR));
     }
 
@@ -246,7 +248,8 @@ class Application
         }
     }
 
-    public function setDebug(bool $debug){
+    public function setDebug(bool $debug)
+    {
         $this->debug = $debug;
         return $this;
     }

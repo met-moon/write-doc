@@ -1,5 +1,5 @@
 {
-    "name": "heropoo/write-doc",
+    "name": "write-doc/write-doc",
     "description": "write",
     "type": "project",
     "license": "MIT",
@@ -17,7 +17,7 @@
         "php": ">=7.0",
         "heropoo/routing": "dev-master",
         "illuminate/database": "~5.5",
-        "monolog/monolog": "*",
+        "monolog/monolog": "^1.0",
         "filp/whoops": "^2.1"
     },
     "autoload": {
