@@ -2,6 +2,8 @@
 
 namespace Moon;
 
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use Moon\Routing\Router;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,6 +14,7 @@ use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouteCollection;
 use Whoops\Handler\JsonResponseHandler;
+use Whoops\Handler\PlainTextHandler;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
 
@@ -27,10 +30,12 @@ class Application
 
     protected $config = [];
 
-    protected $errorReportingLevel = E_ALL;
+    protected $environment = 'production';
     protected $debug = false;
     protected $charset = 'UTF-8';
     protected $timezone = 'UTC';
+
+    protected $plugins = [];
 
     /**
      * @var Router
@@ -72,20 +77,29 @@ class Application
 
         $this->request = Request::createFromGlobals();
 
-        $this->handleError();
-
         require_once __DIR__ . '/helpers.php';
 
         \Moon::$app = $this;
     }
 
-    protected function handleError(){
+    protected function handleError()
+    {
+        $logger = new Logger('app');
         $whoops = new Run();
-        $whoops->pushHandler(new PrettyPageHandler());
-        if($this->request->isXmlHttpRequest()){
-            $whoops->pushHandler(new JsonResponseHandler());
+        if($this->debug) {
+            $whoops->pushHandler(new PrettyPageHandler());
+            if ($this->request->isXmlHttpRequest()) {
+                $whoops->pushHandler(new JsonResponseHandler());
+            }
+        }else{
+            $handler = new PlainTextHandler($logger);
+            $handler->loggerOnly(true);
+            $whoops->pushHandler($handler);
         }
         $whoops->register();
+
+        $filename = $this->rootPath.'/runtime/logs/app-'.date('Y-m-d').'.log';
+        $logger->pushHandler(new StreamHandler($filename, Logger::ERROR));
     }
 
     protected function init()
@@ -108,9 +122,8 @@ class Application
         }
     }
 
-    public function enableDebug($errorReportingLevel = E_ALL)
+    public function enableDebug()
     {
-        $this->errorReportingLevel = $errorReportingLevel;
         $this->debug = true;
         return $this;
     }
@@ -119,16 +132,29 @@ class Application
      * @param array $plugins
      * @return $this
      */
-    public function bootstrap($plugins = [])
+    public function bootstrap(array $plugins)
     {
-        foreach ($plugins as $plugin) {
-            require_once $this->rootPath . DIRECTORY_SEPARATOR . 'bootstrap' . DIRECTORY_SEPARATOR . $plugin . '.php';
+        $this->plugins = $plugins;
+        return $this;
+    }
+
+    protected function bootstrapPlugins()
+    {
+        foreach ($this->plugins as $plugin) {
+            include_once $this->rootPath . DIRECTORY_SEPARATOR . 'bootstrap' . DIRECTORY_SEPARATOR . $plugin . '.php';
         }
         return $this;
     }
 
     public function run()
     {
+        $this->handleError();
+
+        $defaultPlugins = $this->config['bootstrap'];
+        $this->plugins = array_merge($this->plugins, $defaultPlugins);
+        $this->plugins = array_unique($this->plugins);
+        $this->bootstrapPlugins();
+
         $this->router = new Router(null, [
             'namespace' => 'App\\Controllers',
             //'middleware'=>['sessionStart'],
@@ -218,6 +244,11 @@ class Application
 
             return $this->makeResponse($data);
         }
+    }
+
+    public function setDebug(bool $debug){
+        $this->debug = $debug;
+        return $this;
     }
 
     public function __call($name, $arguments)
