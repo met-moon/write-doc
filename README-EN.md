@@ -8,3 +8,8 @@
 [![GitHub watchers](https://img.shields.io/github/watchers/badges/shields.svg?style=social&label=Watch)](https://github.com/Evil-S0ul/write-doc)
 [![GitHub followers](https://img.shields.io/github/followers/espadrine.svg?style=social&label=Follow)](https://github.com/Evil-S0ul/write-doc)
 [![Mozilla Add-on](https://img.shields.io/amo/stars/dustman.svg)](https://github.com/Evil-S0ul/write-doc)
+
+To install it via composer
+```
+composer create-project write-doc/write-doc
+```
