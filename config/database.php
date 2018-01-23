@@ -17,12 +17,12 @@ return [
             'password'  => 'root',
             'charset'   => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
-            'prefix'    => 'es_',
+            'prefix'    => '',
             'strict'    => false,
         ],
         'sqlite' => [
             'driver' => 'sqlite',
-            'database' => storage_path('write-doc.sqlite'),
+            'database' => runtime_path('sqlite/write-doc.sqlite'),
             'prefix' => '',
         ],
     ]

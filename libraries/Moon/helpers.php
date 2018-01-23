@@ -83,6 +83,17 @@ if (!function_exists('storage_path')) {
     }
 }
 
+if (!function_exists('runtime_path')) {
+    /**
+     * @param string $path
+     * @return string
+     */
+    function runtime_path($path = '')
+    {
+        return \Moon::$app->getRootPath() . DIRECTORY_SEPARATOR . 'runtime' . (strlen($path) ? DIRECTORY_SEPARATOR . $path : '');
+    }
+}
+
 if (!function_exists('public_path')) {
     /**
      * @param string $path
