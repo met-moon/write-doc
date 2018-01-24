@@ -8,7 +8,7 @@
 [![GitHub followers](https://img.shields.io/github/followers/espadrine.svg?style=social&label=Follow)](https://github.com/Evil-S0ul/write-doc)
 [![Mozilla Add-on](https://img.shields.io/amo/stars/dustman.svg)](https://github.com/Evil-S0ul/write-doc)
 
-To install it via composer
+通过composer安装
 ```
 composer create-project write-doc/write-doc
 ```
