@@ -5,6 +5,7 @@ namespace Moon;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Moon\Config\Config;
+use Moon\Routing\Route;
 use Moon\Routing\Router;
 use Moon\Container\Container;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -105,14 +106,6 @@ class Application extends Container
         if (!empty($this->config['charset'])) {
             $this->charset = $this->config['charset'];
         }
-
-        if (isset($this->config['session']['auto_start']) && $this->config['session']['auto_start'] == false) {
-        } else {
-            if (!empty($this->config['session']['name'])) {
-                session_name($this->config['session']['name']);
-            }
-            session_start();
-        }
     }
 
     public function enableDebug()
@@ -140,16 +133,8 @@ class Application extends Container
     {
         $this->handleError();
 
-        /*$defaultPlugins = isset($this->config['bootstrap']) ? $this->config['bootstrap'] : [];
-        $this->plugins = array_merge($this->plugins, $defaultPlugins);
-        $this->plugins = array_unique($this->plugins);
-        $this->bootstrapPlugins();*/
-        //$this->bootstrapPlugins();
-
         $router = new Router(null, [
             'namespace' => 'App\\Controllers',
-            //'middleware'=>['sessionStart'],
-            //'prefix'=>''
         ]);
 
         $this->add('router', $router);
@@ -203,11 +188,43 @@ class Application extends Container
     }
 
     /**
+     * @param Request $request
+     * @param array $middlewareList
+     * @return mixed
+     * @throws Exception
+     */
+    protected function filterMiddleware($request, $middlewareList)
+    {
+        if (empty($middlewareList)) {
+            return null;
+        }
+        $middleware = array_shift($middlewareList);
+        if (!class_exists($middleware)) {
+            throw new Exception('Class ' . $middleware . ' is not exists!');
+        }
+        $middlewareObj = new $middleware();
+        return $middlewareObj->handle($request, function ($request) use ($middlewareList) {
+            return $this->filterMiddleware($request, $middlewareList);
+        });
+    }
+
+    /**
      * @param array $matchResult
      * @return JsonResponse|Response
      */
     protected function resolveController($matchResult)
     {
+        $routeName = $matchResult['_route'];
+        $router = $this->get('router');
+        $route = $router->getRoute($routeName);
+        $middlewareList = $route->getMiddleware();
+        $request = $this->get('request');
+        $result = $this->filterMiddleware($request, $middlewareList);
+
+        if (!is_null($result)) {
+            return $this->makeResponse($result);
+        }
+
         /**
          * resolve controller
          */
@@ -215,7 +232,7 @@ class Application extends Container
         unset($matchResult['_controller']);
         unset($matchResult['_route']);
         if ($action instanceof \Closure) {
-            $data = call_user_func($action, $this->get('router'));
+            $data = call_user_func($action, $router);
             return $this->makeResponse($data);
         } else {
             $actionArr = explode('::', $action);
