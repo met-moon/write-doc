@@ -7,9 +7,7 @@
  */
 
 Route::get('/', 'IndexController::index')->name('index');
-
 Route::get('login', 'IndexController::login');
-
 Route::get('say/{something}', 'IndexController::say');
-
 Route::get('db', 'IndexController::db');
+
