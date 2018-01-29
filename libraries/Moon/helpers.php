@@ -105,17 +105,6 @@ if (!function_exists('public_path')) {
     }
 }
 
-if (!function_exists('config')) {
-    /**
-     * @param $key
-     * @return mixed|null
-     */
-    function config($key)
-    {
-        return \Moon\Config::get($key);
-    }
-}
-
 if (!function_exists('asset')) {
     /**
      * @param string $path

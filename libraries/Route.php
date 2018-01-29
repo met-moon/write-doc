@@ -7,7 +7,6 @@
  */
 
 /**
- *
  * Class Route
  */
 class Route{
@@ -17,7 +16,7 @@ class Route{
         /**
          * @var \Moon\Routing\Router $router
          */
-        $router = \Moon::$app->getRouter();
+        $router = \Moon::$app->get('router');
         return call_user_func_array([$router, $name], $arguments);
     }
 }

@@ -3,7 +3,7 @@
 return [
     'url' => 'http://localhost',
     'timezone' => 'Asia/Shanghai',
-    'bootstrap' => [
+    /*'bootstrap' => [
         'database'
-    ]
+    ]*/
 ];
