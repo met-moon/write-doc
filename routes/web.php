@@ -27,3 +27,7 @@ $router->group(['middleware'=>\App\Middleware\SessionStart::class], function ($r
         $router->get('', 'UserController::index')->name('user');
     });
 });
+
+Route::get('aa', function (){
+
+});

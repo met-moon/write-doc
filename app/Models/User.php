@@ -10,5 +10,5 @@ namespace App\Models;
 class User extends Model
 {
     protected $tableName = 'user';
-
+    protected $primaryKey = 'id';
 }

@@ -19,7 +19,7 @@ class Auth
      */
     public function handle($request, Closure $next){
         if(empty($_SESSION['user'])){
-            return ('login');
+            return redirect('login');
         }
 
         return $next($request);

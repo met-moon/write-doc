@@ -1,6 +1,6 @@
 {
     "name": "write-doc/write-doc",
-    "description": "write",
+    "description": "write document",
     "type": "project",
     "license": "MIT",
     "authors": [
@@ -15,11 +15,7 @@
     ],
     "require": {
         "php": ">=5.4",
-        "heropoo/routing": "dev-master",
-        "heropoo/db": "dev-master",
-        "heropoo/config": "dev-master",
-        "monolog/monolog": "^1.0",
-        "filp/whoops": "^2.1"
+        "heropoo/moon": "*"
     },
     "autoload": {
         "psr-4": {

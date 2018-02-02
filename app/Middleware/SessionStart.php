@@ -26,7 +26,6 @@ class SessionStart
             }
             empty($config) ? session_start() : session_start($config);
         }
-
         return $next($request);
     }
 }
