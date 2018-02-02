@@ -5,7 +5,6 @@ namespace Moon;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Moon\Config\Config;
-use Moon\Routing\Route;
 use Moon\Routing\Router;
 use Moon\Container\Container;
 use Symfony\Component\HttpFoundation\JsonResponse;

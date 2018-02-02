@@ -6,8 +6,24 @@
  * Time: 22:05
  */
 
-Route::get('/', 'IndexController::index')->name('index');
-Route::get('login', 'IndexController::login');
-Route::get('say/{something}', 'IndexController::say');
-Route::get('db', 'IndexController::db');
+/**
+ * @var \Moon\Routing\Router $router
+ */
+$router = Moon::$app->get('router');
 
+$router->group(['middleware'=>\App\Middleware\SessionStart::class], function ($router){
+    /**
+     * @var \Moon\Routing\Router $router
+     */
+    $router->get('', 'IndexController::index')->name('index');
+    $router->get('login', 'LoginController::login');
+    $router->post('login', 'LoginController::post_login');
+    $router->get('logout', 'LoginController::logout');
+
+    $router->group(['prefix'=>'user', 'middleware'=>\App\Middleware\Auth::class], function ($router){
+        /**
+         * @var \Moon\Routing\Router $router
+         */
+        $router->get('', 'UserController::index')->name('user');
+    });
+});

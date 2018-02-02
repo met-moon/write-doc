@@ -13,17 +13,6 @@ use Moon\Controller;
 class IndexController extends Controller
 {
     public function index(){
-
-        $user = new User();
-        var_dump($user->fetchAll());
         return 'welcome to write-doc';
-    }
-
-    public function login(){
-        return $this->render('login');
-    }
-
-    public function db(){
-        var_dump(\Moon::$app->getDb());
     }
 }

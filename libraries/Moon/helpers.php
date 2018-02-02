@@ -116,7 +116,7 @@ if (!function_exists('asset')) {
         /**
          * @var \Symfony\Component\HttpFoundation\Request $request
          */
-        $request = \Moon::$app->getRequest();
+        $request = \Moon::$app->get('request');
         if ($full) {
             return $request->getSchemeAndHttpHost() . $request->getBasePath() . '/' . $path;
         }
@@ -142,7 +142,7 @@ if (!function_exists('request')) {
      */
     function request($key = null, $default = null)
     {
-        $request = \Moon::$app->getRequest();
+        $request = \Moon::$app->get('request');
         if(is_null($key)){
             return $request;
         }

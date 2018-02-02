@@ -8,5 +8,8 @@
 
 class Moon
 {
+    /**
+     * @var \Moon\Application $app
+     */
     public static $app;
 }

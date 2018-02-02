@@ -8,6 +8,6 @@
 
 require '../vendor/autoload.php';
 
-$app = new \Moon\Application(dirname(__DIR__));
+$app = new \Moon\Application('../');
 $app->enableDebug();
 $app->run();
