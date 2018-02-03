@@ -1,6 +1,6 @@
 # WriteDoc
 
-[中文文档](./README.md)
+[中文文档](./README-CN.md)
 
 [![MIT-LICENSE](https://img.shields.io/apm/l/vim-mode.svg)](./LICENSE)
 
