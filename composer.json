@@ -15,7 +15,8 @@
     ],
     "require": {
         "php": ">=5.4",
-        "heropoo/moon": "*"
+        "heropoo/moon": "*",
+        "erusev/parsedown": "^1.7"
     },
     "autoload": {
         "psr-4": {

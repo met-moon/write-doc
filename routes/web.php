@@ -28,6 +28,4 @@ $router->group(['middleware'=>\App\Middleware\SessionStart::class], function ($r
     });
 });
 
-Route::get('aa', function (){
-
-});
+Route::get('md', 'MDController::index');
