@@ -1,4 +1,7 @@
 #!/bin/env php
 <?php
 
-echo 'moon console';
+
+$statusCode = 0;
+
+exit($statusCode);
