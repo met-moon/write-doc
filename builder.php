@@ -47,7 +47,7 @@ $html = file_get_contents('src/layouts/'.$layout.'.html');
 
 $html = preg_replace('#({{content}})#U', $content, $html);
 
-if(!empty($_GET['menu'])){  //读取目录
+if(!empty($_GET['get_menu'])){  //读取目录
     $dom = new DOMDocument();
     $dom->loadHTML($html);
     $menu = '';
