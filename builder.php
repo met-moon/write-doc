@@ -89,7 +89,7 @@ if(!empty($_GET['get_menu'])){  //读取目录
     </style>
 </head>
 <body>
-<div id="top_bar">文档地址：<a id="iframe_url" title="点击访问" href="dst/<?= $input?>.html">dst/<?= $input?>.html</a></div>
+<div id="top_bar">文档地址：<a id="iframe_url" title="点击访问" target="_blank" href="dst/<?= $input?>.html">dst/<?= $input?>.html</a></div>
 <iframe src="dst/<?= $input?>.html" onload="loadFrame(this)"></iframe>
 </body>
 <script>

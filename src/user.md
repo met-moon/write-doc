@@ -1,6 +1,6 @@
-## 1. 用户账号[user]
+## 1. 用户账号
 
-### 获取注册验证码[userRegGetCode]
+### 获取注册验证码
 * 请求方式 `POST`
 * 请求地址 `http://api.example.com/user/reg-get-code`
 * 用途 `用户注册时拉取验证码`
@@ -11,7 +11,7 @@
     | phone | string | 手机号 |
 
 * 返回结果
-```
+```json
 {
     "code": 0,
     "message": "成功获取验证码",
@@ -21,7 +21,7 @@
 }
 ```
 
-### 注册[userRegister]
+### 注册
 * 请求方式 `POST`
 * 请求地址 `http://api.example.com/user/register`
 * 用途 
@@ -36,7 +36,7 @@
     | source | string | 来源 0：默认 |  
 
 * 返回结果
-```
+```json
 {
     "code": 0,
     "message": "注册成功",
@@ -60,7 +60,7 @@
 }
 ```
 
-### 获取登陆验证码 [userLoginGetCode]
+### 获取登陆验证码
 * 请求方式 `POST`
 * 请求地址 `http://api.example.com/user/login-get-code`
 * 用途 
@@ -71,7 +71,7 @@
     | phone | string | 手机号 |
 
 * 返回结果
-```
+```json
 {
     "code": 0,
     "message": "成功获取验证码",
@@ -81,7 +81,7 @@
 }
 ```
 
-### 登陆[userLogin]
+### 登陆
 * 请求方式 `POST`
 * 请求地址 `http://api.example.com/user/login`
 * 用途 
@@ -95,7 +95,7 @@
     | deviceId | string | 设备id |
 
 * 返回结果
-```
+```json
 {
     "code": 0,
     "message": "登录成功",
@@ -110,7 +110,7 @@
 }
 ```
 
-### 快速登陆[userQuickLogin]
+### 快速登陆
 * 请求方式 `POST`
 * 请求地址 `http://api.example.com/user/quick-login`
 * 用途 
@@ -121,7 +121,7 @@
     | SESSIONID | string | session id |
 
 * 返回结果
-```
+```json
 {
     "code": 0,
     "message": "登录成功",
@@ -136,13 +136,13 @@
 }
 ```
 
-### 退出[userLogout]
+### 退出
 * 请求方式 `GET`
 * 请求地址 `http://api.example.com/user/logout`
 * 用途 
 * 请求参数 
 * 返回结果
-```
+```json
 {
     "code": 0,
     "message": "成功退出",
@@ -152,7 +152,7 @@
 }
 ```
 
-### 修改登录密码[userChangePwd]
+### 修改登录密码
 * 请求方式 `POST`
 * 请求地址 `http://api.example.com/user/change-pwd`
 * 用途 
