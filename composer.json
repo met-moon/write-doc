@@ -14,14 +14,6 @@
         }
     ],
     "require": {
-        "php": ">=5.4",
-        "heropoo/moon": "*",
-        "erusev/parsedown": "^1.7"
-    },
-    "autoload": {
-        "psr-4": {
-            "": "libraries/",
-            "App\\": "app/"
-        }
+        "cebe/markdown": "^1.2"
     }
 }
