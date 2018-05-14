@@ -1035,21 +1035,6 @@ body .markdown-body
         }else{
             var h2 = document.getElementsByTagName('h2')[0];
             document.title = h2.textContent || h2.innerText;
-            h2.setAttribute('id', encodeURI(document.title));
-
-            /*//generate menu
-            var title = document.title.match(/[a-zA-Z]+/g)[0];
-            var menu = '';
-            menu += '['+document.title+']('+title+'.html)\n';
-
-            var h3_list = document.getElementsByTagName("h3");
-            for(var i=0; i< h3_list.length; i++){
-                var text =  h3_list[i].textContent || h3_list[i].innerText;
-                h3_list[i].setAttribute('id', encodeURI(text));
-
-                menu +='    * ['+text+']('+title+'.html#'+encodeURI(text)+')\n';
-            }
-            console.log(menu);*/
         }
     };
 </script>

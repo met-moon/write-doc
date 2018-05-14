@@ -1,0 +1,11 @@
+{
+  "layout": "main",
+  "src_path": "src",
+  "dst_path": "dst",
+  "tmp_path": "tmp",
+  "index_page": "index",
+  "include_pages": [
+    "user",
+    "other"
+  ]
+}
