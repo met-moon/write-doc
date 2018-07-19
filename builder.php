@@ -6,82 +6,88 @@
  * Time: 12:01
  */
 
-//todo 1.默认样式 2.锚点 3.生成目录
-
 require 'vendor/autoload.php';
 
-$input = isset($_GET['input']) ? $_GET['input'] : 'index';
-$output = isset($_GET['output']) ? $_GET['output'] : $input;
-$layout = isset($_GET['layout']) ? $_GET['layout'] : 'main';
+$config = json_decode(file_get_contents('config.json'), 1);
 
-$src_path = 'src';
-$dst_path = 'dst';
-$tmp_path = 'tmp';
-
-$src = $src_path.'/'.$input.'.md';
-$dst = $dst_path.'/'.$output.'.html';
-
-if(!file_exists($src)){
-    throw new Exception('File `'.$src.'` is not exists!');
+foreach($config['include_pages'] as $page){
+    build_page($page, false, $config['layout'], $config['src_path'], $config['dst_path'], $config['tmp_path']);
 }
 
-if(!file_exists($src_path.'/layouts/'.$layout.'.html')){
-    throw new Exception('File `'.$src_path.'/layouts/'.$layout.'.html` is not exists!');
-}
+build_page($config['index_page'], true, $config['layout'], $config['src_path'], $config['dst_path'], $config['tmp_path']);
 
-$content = file_get_contents($src);
+function build_page($input, $is_index = false, $layout = 'main', $src_path = '.', $dst_path = '.', $tmp_path = './tmp'){
+    $src_path = realpath($src_path);
+    $dst_path = realpath($dst_path);
+    $tmp_path = realpath($tmp_path);
 
-if(!empty($_GET['put_menu'])){  //放入目录列表
-    $dh = opendir($tmp_path);
-    $menu_src = '';
-    while (($file = readdir($dh)) !== false) {
-        if(strpos($file, '_menu_') === 0){
-            $menu_src .= file_get_contents($tmp_path.'/'.$file);
+    $src = $src_path.'/'.$input.'.md';
+    $dst = $dst_path.'/'.$input.'.html';
+
+    if(!file_exists($src)){
+        throw new Exception('File `'.$src.'` is not exists!');
+    }
+
+    if(!file_exists($src_path.'/layouts/'.$layout.'.html')){
+        throw new Exception('File `'.$src_path.'/layouts/'.$layout.'.html` is not exists!');
+    }
+
+    $content = file_get_contents($src);
+
+    if($is_index){
+        $dh = opendir($tmp_path);
+        $menu_src = '';
+        while (($file = readdir($dh)) !== false) {
+            if(strpos($file, '_menu_') === 0){
+                $menu_src .= file_get_contents($tmp_path.'/'.$file);
+            }
         }
+        closedir($dh);
+        $content = str_replace('<!-- menu -->', $menu_src, $content);
     }
-    closedir($dh);
-    $content = str_replace('<!-- menu -->', $menu_src, $content);
+
+    $parser = new \cebe\markdown\GithubMarkdown();
+    $parser->html5 = true;
+    $content = $parser->parse($content);
+
+    $html = file_get_contents($src_path.'/layouts/'.$layout.'.html');
+
+    $html = preg_replace('#({{content}})#U', $content, $html);
+
+    if(!$is_index){  //读取目录
+        $dom = new DOMDocument();
+        $dom->loadHTML($html);
+        $menu = '';
+        $h2 = $dom->getElementsByTagName('h2')[0];
+        $title = $h2->textContent;
+        //$h2->setAttribute('id', urlencode($title));
+        $h2->setAttribute('id', base64_encode($title));
+        $number = '';
+        if(preg_match("#^([0-9\.]+)\s#", $title, $matches)){
+            $number = trim($matches[0]);
+            $title = str_replace($number, '', $title);
+        }
+
+        $menu .= strlen($number) > 0 ? $number.' ['.$title.']('.$input.'.html)'.PHP_EOL : '* ['.$title.']('.$input.'.html)'.PHP_EOL;
+
+        foreach($dom->getElementsByTagName('h3') as $h3){
+            //$menu .= '    * ['.$h3->textContent.']('.$input.'.html#'.urlencode($h3->textContent).')'.PHP_EOL;
+            //$h3->setAttribute('id', urlencode($h3->textContent));
+            $menu .= '    * ['.$h3->textContent.']('.$input.'.html#'.base64_encode($h3->textContent).')'.PHP_EOL;
+            $h3->setAttribute('id', base64_encode($h3->textContent));
+        }
+        $dom->saveHTMLFile($dst);
+        file_put_contents($tmp_path.'/_menu_'.$number.$input.'.md', $menu);
+        $response =  file_get_contents($dst);
+    }else{
+        file_put_contents($dst, $html);
+        $response =  $html;
+    }
+
+    return $response;
 }
 
-$parser = new \cebe\markdown\GithubMarkdown();
-$parser->html5 = true;
-$content = $parser->parse($content);
-
-$html = file_get_contents($src_path.'/layouts/'.$layout.'.html');
-
-$html = preg_replace('#({{content}})#U', $content, $html);
-
-if(!empty($_GET['get_menu'])){  //读取目录
-    $dom = new DOMDocument();
-    $dom->loadHTML($html);
-    $menu = '';
-    $h2 = $dom->getElementsByTagName('h2')[0];
-    $title = $h2->textContent;
-    //$h2->setAttribute('id', urlencode($title));
-    $h2->setAttribute('id', base64_encode($title));
-    $number = '';
-    if(preg_match("#^([0-9\.]+)\s#", $title, $matches)){
-        $number = trim($matches[0]);
-        $title = str_replace($number, '', $title);
-    }
-
-    $menu .= strlen($number) > 0 ? $number.' ['.$title.']('.$input.'.html)'.PHP_EOL : '* ['.$title.']('.$input.'.html)'.PHP_EOL;
-
-    foreach($dom->getElementsByTagName('h3') as $h3){
-        //$menu .= '    * ['.$h3->textContent.']('.$input.'.html#'.urlencode($h3->textContent).')'.PHP_EOL;
-        //$h3->setAttribute('id', urlencode($h3->textContent));
-        $menu .= '    * ['.$h3->textContent.']('.$input.'.html#'.base64_encode($h3->textContent).')'.PHP_EOL;
-        $h3->setAttribute('id', base64_encode($h3->textContent));
-    }
-    $dom->saveHTMLFile($dst);
-    file_put_contents($tmp_path.'/_menu_'.$number.$input.'.md', $menu);
-    $response =  file_get_contents($dst);
-}else{
-    file_put_contents($dst, $html);
-    $response =  $html;
-}
-
-$url = dirname($_SERVER['REQUEST_URI']).'/'.$input.'.html';
+$url = rtrim($config['base_url'], '/').'/'.$config['index_page'].'.html';
 
 ?><!doctype html>
 <html lang="en">

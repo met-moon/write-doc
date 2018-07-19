@@ -4,6 +4,7 @@
   "dst_path": "dst",
   "tmp_path": "tmp",
   "index_page": "index",
+  "base_url": "/dst/",
   "include_pages": [
     "user",
     "other"
