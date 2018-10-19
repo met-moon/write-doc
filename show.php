@@ -8,5 +8,4 @@ use Moon\WriteDoc\WriteDoc;
 
 $writer = new WriteDoc(__DIR__);
 
-echo $writer->build('demo');
-
+echo $writer->show('demo', 'index');

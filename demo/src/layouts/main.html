@@ -1022,10 +1022,24 @@ body .markdown-body
     }
 }
 </style>
+<link rel="stylesheet" href="http://lib.h-ui.net/Hui-iconfont/1.0.9/iconfont.min.css">
+<style>
+    .side-bar{border: 1px solid #ccc;width: 2.75rem; position: fixed;right: 2rem;bottom: 2rem;z-index: 999}
+    .side-bar a{
+        text-decoration: none;color: #aaa;font-size: 1.25rem;width: 2.75rem;text-align: center;display: inline-block;
+        padding: 0.5rem 0;
+    }
+    .side-bar a:hover{color: #ffffff;background-color: #999999}
+    .side-bar a:first-child{border-bottom: 1px solid #ccc}
+</style>
 </head>
 <body>
 <div class="markdown-body">
     {{content}}
+</div>
+<div class="side-bar">
+    <a href="index.html" title="返回首页"><i class="Hui-iconfont Hui-iconfont-home2"></i></a>
+    <a href="javascript:smoothscroll();" title="返回顶部"><i class="Hui-iconfont Hui-iconfont-gotop"></i></a>
 </div>
 <script type="text/javascript">
     window.onload = function(){
@@ -1078,6 +1092,13 @@ body .markdown-body
             };
         }
     };
+    function smoothscroll(){
+        var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+        if (currentScroll > 0) {
+            window.requestAnimationFrame(smoothscroll);
+            window.scrollTo (0,currentScroll - (currentScroll/5));
+        }
+    }
 </script>
 </body>
 </html>

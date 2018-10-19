@@ -7,13 +7,14 @@
         {
             "name": "Heropoo",
             "email": "aiyouyou1000@163.com"
-        },
-        {
-            "name": "南丞_",
-            "email": "lampxiezi@163.com"
         }
     ],
     "require": {
         "cebe/markdown": "^1.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Moon\\WriteDoc\\": "src/"            
+        }
     }
 }
