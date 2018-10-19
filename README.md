@@ -6,7 +6,7 @@
 
 To install it via composer
 ```
-composer create-project write-doc/write-doc
+composer require write-doc/write-doc
 ```
 
 ### Feature
