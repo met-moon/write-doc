@@ -54,6 +54,7 @@ class WriteDoc
         }
 
         $config = json_decode(file_get_contents($project_path.'/config.json'), 1);
+        $this->clear_tmp($project_path.'/'.$config['tmp_path']);
 
         foreach($config['include_pages'] as $page){
             $this->build_page($page, false, $config['layout'], $project_path.'/'.$config['src_path'], $project_path.'/'.$config['dst_path'], $project_path.'/'.$config['tmp_path']);
@@ -133,5 +134,19 @@ class WriteDoc
             $response =  $html;
         }
         return $response;
+    }
+
+    protected function clear_tmp($tmp_path){
+        $tmp_path = realpath($tmp_path);
+        if(empty($tmp_path)){
+            return false;
+        }
+        $dh = opendir($tmp_path);
+        while (($file = readdir($dh)) !== false) {
+            if(strpos($file, '_menu_') === 0){
+                @unlink($tmp_path.'/'.$file);
+            }
+        }
+        closedir($dh);
     }
 }
