@@ -16,7 +16,7 @@ jobs:
         run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: Build doc
-        run:
+        run: composer run-script test
 
 #      - name: Build and Deploy
 #        uses: JamesIves/github-pages-deploy-action@master
