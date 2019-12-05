@@ -18,11 +18,11 @@ jobs:
       - name: Build doc
         run: composer run-script test
 
-#      - name: Build and Deploy
-#        uses: JamesIves/github-pages-deploy-action@master
-#        env:
-#          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-#          BASE_BRANCH: master # The branch the action should deploy from.
-#          BRANCH: gh-pages # The branch the action should deploy to.
-#          FOLDER: dist # The folder the action should deploy.
-#          BUILD_SCRIPT: php builder.php demo
+      - name: Build and Deploy
+        uses: JamesIves/github-pages-deploy-action@master
+        env:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BASE_BRANCH: master # The branch the action should deploy from.
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: dist # The folder the action should deploy.
+          # BUILD_SCRIPT: php builder.php demo
