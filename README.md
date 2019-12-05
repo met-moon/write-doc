@@ -2,6 +2,7 @@
 
 [中文文档](./README-CN.md)
 
+[![Actions Status](https://github.com/heropoo/write-doc/workflows/Build/badge.svg)](https://github.com/heropoo/vue-project/actions)
 [![MIT-LICENSE](https://img.shields.io/apm/l/vim-mode.svg)](./LICENSE)
 
 ## Install 
