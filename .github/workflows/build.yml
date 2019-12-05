@@ -13,12 +13,12 @@ jobs:
         uses: actions/checkout@v1
 
       - name: Install Dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest
+        run:  composer install --prefer-dist --no-progress --no-suggest
 
       - name: Build doc
-        run: composer run-script test
+        run:  composer run-script test
 
-      - name: Build and Deploy
+      - name: Deploy
         uses: JamesIves/github-pages-deploy-action@master
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
