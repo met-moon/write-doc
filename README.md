@@ -4,9 +4,15 @@
 
 [![MIT-LICENSE](https://img.shields.io/apm/l/vim-mode.svg)](./LICENSE)
 
+## Install 
 To install it via composer
 ```
 composer require write-doc/write-doc
+```
+
+## Usage
+```sh
+php builder.php demo
 ```
 
 ### Feature

@@ -1,8 +1,6 @@
 {
   "layout": "main",
-  "src_path": "src",
-  "dst_path": "dst",
-  "tmp_path": "tmp",
+  "dst_path": ".",
   "index_page": "index",
   "base_url": "",
   "include_pages": [

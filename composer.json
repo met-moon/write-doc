@@ -10,7 +10,10 @@
         }
     ],
     "require": {
-        "cebe/markdown": "^1.1"
+        "php": ">= 7.4",
+        "ext-json": "*",
+        "ext-dom": "*",
+        "cebe/markdown": "^1.2"
     },
     "autoload": {
         "psr-4": {
