@@ -1,10 +1,13 @@
-name: Ci
+name: Build
 
 on: [push]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php_version: ['5.4', '5.5', '5.6', '7.0']
     steps:
     - name: Checkout
       uses: actions/checkout@v1
