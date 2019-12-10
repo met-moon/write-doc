@@ -18,7 +18,7 @@ composer require write-doc/write-doc
 php builder.php demo
 ```
 
-### Feature
+## Feature
 * Support markdown grammar to write documents. API documentation easier to write. 
 * Auto generate link.
 * Auto generate anchor for jump.
