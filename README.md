@@ -19,8 +19,8 @@ php builder.php demo
 ```
 
 ### Feature
-* Support markdown grammar to write documents.
-* Document Sharing (Public Access, Authorized Access).
-* API documentation easier to write. 
-* Administrator, user points management.
+* Support markdown grammar to write documents. API documentation easier to write. 
+* Auto generate link.
+* Auto generate anchor for jump.
+* Use `j` or `k` key to jump to next/before API.
 
