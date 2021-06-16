@@ -2,7 +2,7 @@
 
 [中文文档](./README-CN.md)
 
-[![Actions Status](https://github.com/heropoo/write-doc/workflows/Build/badge.svg)](https://github.com/heropoo/vue-project/actions)
+[![Actions Status](https://github.com/heropoo/write-doc/workflows/Build/badge.svg)](https://github.com/heropoo/write-doc/actions)
 [![Latest Stable Version](https://poser.pugx.org/write-doc/write-doc/v/stable)](https://packagist.org/packages/write-doc/write-doc)
 [![Total Downloads](https://poser.pugx.org/write-doc/write-doc/downloads)](https://packagist.org/packages/write-doc/write-doc)
 [![License](https://poser.pugx.org/write-doc/write-doc/license)](https://packagist.org/packages/write-doc/write-doc)
