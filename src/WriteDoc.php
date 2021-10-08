@@ -131,8 +131,8 @@ class WriteDoc
             $menu = '';
             $h2 = $dom->getElementsByTagName('h2')[0];
             $title = $h2->textContent;
-            //$h2->setAttribute('id', urlencode($title));
-            $h2->setAttribute('id', base64_encode($title));
+            $h2->setAttribute('id', urlencode($title));
+            //$h2->setAttribute('id', base64_encode($title));
             $number = '';
             if (preg_match("#^([0-9\.]+)\s#", $title, $matches)) {
                 $number = trim($matches[0]);
@@ -142,10 +142,10 @@ class WriteDoc
             $menu .= strlen($number) > 0 ? $number . ' [' . $title . '](' . $input . '.html)' . PHP_EOL : '* [' . $title . '](' . $input . '.html)' . PHP_EOL;
 
             foreach ($dom->getElementsByTagName('h3') as $h3) {
-                //$menu .= '    * ['.$h3->textContent.']('.$input.'.html#'.urlencode($h3->textContent).')'.PHP_EOL;
-                //$h3->setAttribute('id', urlencode($h3->textContent));
-                $menu .= '    * [' . $h3->textContent . '](' . $input . '.html#' . base64_encode($h3->textContent) . ')' . PHP_EOL;
-                $h3->setAttribute('id', base64_encode($h3->textContent));
+                $menu .= '    * [' . $h3->textContent . '](' . $input . '.html#' . urlencode($h3->textContent) . ')' . PHP_EOL;
+                $h3->setAttribute('id', urlencode($h3->textContent));
+//                $menu .= '    * [' . $h3->textContent . '](' . $input . '.html#' . base64_encode($h3->textContent) . ')' . PHP_EOL;
+//                $h3->setAttribute('id', base64_encode($h3->textContent));
             }
             $dom->saveHTMLFile($dst);
             file_put_contents($tmp_path . '/_menu_' . $number . $input . '.md', $menu);

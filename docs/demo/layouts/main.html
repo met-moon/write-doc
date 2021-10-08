@@ -1072,18 +1072,18 @@ body .markdown-body
             var h3_ids = [];
             for(var i=0; i < h3_list.length; i++){
                 h3_ids.push(h3_list[i].id);
-                if(url_hash == ('#'+h3_list[i].id)){
+                if(url_hash === ('#'+h3_list[i].id)){
                     current_h3_index = i;
                 }
             }
             document.onkeydown = function(e){
                 var keyNum = window.event ? e.keyCode :e.which;
-                if(keyNum == 75){ // k  ↑
+                if(keyNum === 75){ // k  ↑
                     if(current_h3_index > 0){
                         current_h3_index--;
                     }
                     window.location.hash = '#'+h3_ids[current_h3_index];
-                }else if(keyNum == 74){ // j ↓
+                }else if(keyNum === 74){ // j ↓
                     if(current_h3_index < (h3_ids.length -1)){
                         current_h3_index++;
                     }
