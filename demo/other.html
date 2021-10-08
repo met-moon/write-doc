@@ -1035,8 +1035,8 @@ body .markdown-body
 </head>
 <body>
 <div class="markdown-body">
-    <h2 id="Mi4g5YW25LuW">2. &#20854;&#20182;</h2>
-<h3 id="5LiK5Lyg5Zu+54mH">&#19978;&#20256;&#22270;&#29255;</h3>
+    <h2 id="2.+%E5%85%B6%E4%BB%96">2. &#20854;&#20182;</h2>
+<h3 id="%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87">&#19978;&#20256;&#22270;&#29255;</h3>
 <ul>
 <li>&#35831;&#27714;&#26041;&#24335; <code>POST</code></li>
 <li>&#35831;&#27714;&#22320;&#22336; <code>http://api.example.com/upload/image</code></li>
@@ -1102,18 +1102,18 @@ body .markdown-body
             var h3_ids = [];
             for(var i=0; i < h3_list.length; i++){
                 h3_ids.push(h3_list[i].id);
-                if(url_hash == ('#'+h3_list[i].id)){
+                if(url_hash === ('#'+h3_list[i].id)){
                     current_h3_index = i;
                 }
             }
             document.onkeydown = function(e){
                 var keyNum = window.event ? e.keyCode :e.which;
-                if(keyNum == 75){ // k  &uarr;
+                if(keyNum === 75){ // k  &uarr;
                     if(current_h3_index > 0){
                         current_h3_index--;
                     }
                     window.location.hash = '#'+h3_ids[current_h3_index];
-                }else if(keyNum == 74){ // j &darr;
+                }else if(keyNum === 74){ // j &darr;
                     if(current_h3_index < (h3_ids.length -1)){
                         current_h3_index++;
                     }

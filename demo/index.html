@@ -1069,17 +1069,17 @@ body .markdown-body
 <h2>目录</h2>
 <ol>
 <li><a href="other.html"> 其他</a><ul>
-<li><a href="other.html#5LiK5Lyg5Zu+54mH">上传图片</a></li>
+<li><a href="other.html#%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87">上传图片</a></li>
 </ul>
 </li>
 <li><a href="user.html"> 用户账号</a><ul>
-<li><a href="user.html#6I635Y+W5rOo5YaM6aqM6K+B56CB">获取注册验证码</a></li>
-<li><a href="user.html#5rOo5YaM">注册</a></li>
-<li><a href="user.html#6I635Y+W55m76ZmG6aqM6K+B56CB">获取登陆验证码</a></li>
-<li><a href="user.html#55m76ZmG">登陆</a></li>
-<li><a href="user.html#5b+r6YCf55m76ZmG">快速登陆</a></li>
-<li><a href="user.html#6YCA5Ye6">退出</a></li>
-<li><a href="user.html#5L+u5pS555m75b2V5a+G56CB">修改登录密码</a></li>
+<li><a href="user.html#%E8%8E%B7%E5%8F%96%E6%B3%A8%E5%86%8C%E9%AA%8C%E8%AF%81%E7%A0%81">获取注册验证码</a></li>
+<li><a href="user.html#%E6%B3%A8%E5%86%8C">注册</a></li>
+<li><a href="user.html#%E8%8E%B7%E5%8F%96%E7%99%BB%E9%99%86%E9%AA%8C%E8%AF%81%E7%A0%81">获取登陆验证码</a></li>
+<li><a href="user.html#%E7%99%BB%E9%99%86">登陆</a></li>
+<li><a href="user.html#%E5%BF%AB%E9%80%9F%E7%99%BB%E9%99%86">快速登陆</a></li>
+<li><a href="user.html#%E9%80%80%E5%87%BA">退出</a></li>
+<li><a href="user.html#%E4%BF%AE%E6%94%B9%E7%99%BB%E5%BD%95%E5%AF%86%E7%A0%81">修改登录密码</a></li>
 </ul>
 </li>
 </ol>
@@ -1120,18 +1120,18 @@ body .markdown-body
             var h3_ids = [];
             for(var i=0; i < h3_list.length; i++){
                 h3_ids.push(h3_list[i].id);
-                if(url_hash == ('#'+h3_list[i].id)){
+                if(url_hash === ('#'+h3_list[i].id)){
                     current_h3_index = i;
                 }
             }
             document.onkeydown = function(e){
                 var keyNum = window.event ? e.keyCode :e.which;
-                if(keyNum == 75){ // k  ↑
+                if(keyNum === 75){ // k  ↑
                     if(current_h3_index > 0){
                         current_h3_index--;
                     }
                     window.location.hash = '#'+h3_ids[current_h3_index];
-                }else if(keyNum == 74){ // j ↓
+                }else if(keyNum === 74){ // j ↓
                     if(current_h3_index < (h3_ids.length -1)){
                         current_h3_index++;
                     }
