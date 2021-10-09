@@ -22,6 +22,7 @@
     },
     "scripts": {
         "build": [
+            "@php builder.php demo",
             "@php builder.php demo2"
         ]
     }
