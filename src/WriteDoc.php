@@ -5,7 +5,7 @@
  * Time: 22:11
  */
 
-namespace Moon\WriteDoc;
+namespace MetMoon\WriteDoc;
 
 use cebe\markdown\GithubMarkdown;
 
@@ -68,6 +68,7 @@ class WriteDoc
         $dist_path = $this->dist_path . '/' . $project;
 
         $this->clear_project_tmp($tmp_path);
+        $this->copy_dir($project_path.'/assets', $dist_path);
 
         foreach ($config['include_pages'] as $page) {
             $this->build_page($page, $project_path, $dist_path, $tmp_path, false, $config['layout']);
@@ -114,7 +115,7 @@ class WriteDoc
                 }
             }
             closedir($dh);
-            $content = str_replace('<!-- menu -->', $menu_src, $content);
+            $content = str_replace('<!--{{menu}}-->', $menu_src, $content);
         }
 
         $parser = new GithubMarkdown();
@@ -171,4 +172,23 @@ class WriteDoc
         }
         closedir($dh);
     }
+
+    public function copy_dir($src, $dst) {
+        $dir = opendir($src);
+        if(!is_dir){
+            @mkdir($dst, 0755, true);
+        }
+        while(false !== ( $file = readdir($dir)) ) {
+          if (( $file != '.' ) && ( $file != '..' )) {
+            if ( is_dir($src . '/' . $file) ) {
+              $this->copy_dir($src . '/' . $file,$dst . '/' . $file);
+              continue;
+            }
+            else {
+              copy($src . '/' . $file,$dst . '/' . $file);
+            }
+          }
+        }
+        closedir($dir);
+    } 
 }

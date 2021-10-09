@@ -4,3 +4,4 @@ composer.lock
 *.bk
 /tmp/
 /dist/
+node_modules/

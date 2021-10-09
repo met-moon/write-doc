@@ -6,7 +6,7 @@
 
 require __DIR__.'/../vendor/autoload.php';
 
-use Moon\WriteDoc\WriteDoc;
+use MetMoon\WriteDoc\WriteDoc;
 
 $writer = new WriteDoc(dirname(__DIR__));
 echo $writer->show('demo', 'index');
