@@ -68,9 +68,11 @@ class WriteDoc
         $dist_path = $this->dist_path . '/' . $project;
 
         $this->clear_project_tmp($tmp_path);
+
         if(is_dir($project_path . '/assets')){
             $this->copy_dir($project_path . '/assets', $dist_path);
         }
+
         foreach ($config['include_pages'] as $page) {
             $this->build_page($page, $project_path, $dist_path, $tmp_path, false, $config['layout']);
         }
