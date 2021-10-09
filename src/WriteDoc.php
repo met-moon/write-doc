@@ -68,8 +68,9 @@ class WriteDoc
         $dist_path = $this->dist_path . '/' . $project;
 
         $this->clear_project_tmp($tmp_path);
-        $this->copy_dir($project_path.'/assets', $dist_path);
-
+        if(is_dir($project_path . '/assets')){
+            $this->copy_dir($project_path . '/assets', $dist_path);
+        }
         foreach ($config['include_pages'] as $page) {
             $this->build_page($page, $project_path, $dist_path, $tmp_path, false, $config['layout']);
         }
@@ -173,22 +174,22 @@ class WriteDoc
         closedir($dh);
     }
 
-    public function copy_dir($src, $dst) {
-        $dir = opendir($src);
-        if(!is_dir){
+    public function copy_dir($src, $dst)
+    {
+        if (!is_dir($dst)) {
             @mkdir($dst, 0755, true);
         }
-        while(false !== ( $file = readdir($dir)) ) {
-          if (( $file != '.' ) && ( $file != '..' )) {
-            if ( is_dir($src . '/' . $file) ) {
-              $this->copy_dir($src . '/' . $file,$dst . '/' . $file);
-              continue;
+        $dir = opendir($src);
+        while (false !== ($file = readdir($dir))) {
+            if (($file != '.') && ($file != '..')) {
+                if (is_dir($src . '/' . $file)) {
+                    $this->copy_dir($src . '/' . $file, $dst . '/' . $file);
+                    continue;
+                } else {
+                    copy($src . '/' . $file, $dst . '/' . $file);
+                }
             }
-            else {
-              copy($src . '/' . $file,$dst . '/' . $file);
-            }
-          }
         }
         closedir($dir);
-    } 
+    }
 }
