@@ -4,7 +4,7 @@
  */
 require './vendor/autoload.php';
 
-use MetMoon\WriteDoc\WriteDoc;
+use WriteDoc\WriteDoc;
 
 $writer = new WriteDoc(__DIR__);
 

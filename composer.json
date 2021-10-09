@@ -17,7 +17,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Moon\\WriteDoc\\": "src/"            
+            "WriteDoc\\": "src/"
         }
     },
     "scripts": {

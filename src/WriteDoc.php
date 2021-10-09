@@ -5,7 +5,7 @@
  * Time: 22:11
  */
 
-namespace MetMoon\WriteDoc;
+namespace WriteDoc;
 
 use cebe\markdown\GithubMarkdown;
 
