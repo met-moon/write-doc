@@ -5,7 +5,7 @@
  * Time: 22:11
  */
 
-namespace Moon\WriteDoc;
+namespace MetMoon\WriteDoc;
 
 use cebe\markdown\GithubMarkdown;
 
@@ -114,7 +114,7 @@ class WriteDoc
                 }
             }
             closedir($dh);
-            $content = str_replace('<!-- menu -->', $menu_src, $content);
+            $content = str_replace('<!--{{menu}}-->', $menu_src, $content);
         }
 
         $parser = new GithubMarkdown();

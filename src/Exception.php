@@ -4,7 +4,7 @@
  * Time: 10:33
  */
 
-namespace Moon\WriteDoc;
+namespace MetMoon\WriteDoc;
 
 
 class Exception extends \Exception
