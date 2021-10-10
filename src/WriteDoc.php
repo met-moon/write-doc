@@ -54,6 +54,10 @@ class WriteDoc
 
     protected function makeMenuData($project_path, $tmp_path, $expect = [])
     {
+        if (!is_dir($tmp_path)) {
+            @mkdir($tmp_path, 0755, true);
+        }
+
         $parser = new GithubMarkdown();
         $parser->html5 = true;
 
@@ -86,6 +90,7 @@ class WriteDoc
                 $menu .= '    * [' . $h3->textContent . '](' . $base_name . '.html#' . urlencode($h3->textContent) . ')' . PHP_EOL;
                 $h3->setAttribute('id', urlencode($h3->textContent));
             }
+            //var_dump($menu, $tmp_path . '/_menu_' . $number . $base_name . '.md');exit;
             file_put_contents($tmp_path . '/_menu_' . $number . $base_name . '.md', $menu);
             unset($dom);
         }
