@@ -90,7 +90,6 @@ class WriteDoc
                 $menu .= '    * [' . $h3->textContent . '](' . $base_name . '.html#' . urlencode($h3->textContent) . ')' . PHP_EOL;
                 $h3->setAttribute('id', urlencode($h3->textContent));
             }
-            //var_dump($menu, $tmp_path . '/_menu_' . $number . $base_name . '.md');exit;
             file_put_contents($tmp_path . '/_menu_' . $number . $base_name . '.md', $menu);
             unset($dom);
         }
@@ -170,6 +169,11 @@ class WriteDoc
         }
 
         $content = file_get_contents($src);
+
+        if (strpos($content, '<!--{{menu}}-->') !== false) {
+            $menu_src = $this->getMenuData($tmp_path);
+            $content = str_replace('<!--{{menu}}-->', $menu_src, $content);
+        }
 
         $parser = new GithubMarkdown();
         $parser->html5 = true;
