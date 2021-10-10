@@ -16,6 +16,8 @@ class WriteDoc
     public $dist_path;
     public $tmp_path;
 
+    protected $menu_src = null;
+
     public function __construct($root_path, $options = [])
     {
         $this->root_path = $root_path;
@@ -50,6 +52,61 @@ class WriteDoc
         return file_get_contents($page);
     }
 
+    protected function makeMenuData($project_path, $tmp_path, $expect = [])
+    {
+        $parser = new GithubMarkdown();
+        $parser->html5 = true;
+
+        foreach (glob($project_path . "/*.md") as $filename) {
+            $base_name = basename($filename, '.md');
+            if (in_array($base_name, $expect)) {
+                continue;
+            }
+
+            $content = file_get_contents($filename);
+
+            $html = $parser->parse($content);
+            $html = '<head><meta charset="utf-8"></head>' . $html;
+
+            $dom = new \DOMDocument();
+            $dom->loadHTML($html);
+            $menu = '';
+            $h2 = $dom->getElementsByTagName('h2')[0];
+            $title = $h2->textContent;
+            $h2->setAttribute('id', urlencode($title));
+            $number = '';
+            if (preg_match("#^([0-9\.]+)\s#", $title, $matches)) {
+                $number = trim($matches[0]);
+                $title = str_replace($number, '', $title);
+            }
+
+            $menu .= strlen($number) > 0 ? $number . ' [' . $title . '](' . $base_name . '.html)' . PHP_EOL : '* [' . $title . '](' . $base_name . '.html)' . PHP_EOL;
+
+            foreach ($dom->getElementsByTagName('h3') as $h3) {
+                $menu .= '    * [' . $h3->textContent . '](' . $base_name . '.html#' . urlencode($h3->textContent) . ')' . PHP_EOL;
+                $h3->setAttribute('id', urlencode($h3->textContent));
+            }
+            file_put_contents($tmp_path . '/_menu_' . $number . $base_name . '.md', $menu);
+            unset($dom);
+        }
+    }
+
+    protected function getMenuData($tmp_path)
+    {
+        if (!is_null($this->menu_src)) {
+            return $this->menu_src;
+        }
+        $dh = opendir($tmp_path);
+        $menu_src = '';
+        while (($file = readdir($dh)) !== false) {
+            if (strpos($file, '_menu_') === 0) {
+                $menu_src .= file_get_contents($tmp_path . '/' . $file);
+            }
+        }
+        closedir($dh);
+        return $this->menu_src = $menu_src;
+    }
+
     public function build($project)
     {
         $start_time = microtime(true);
@@ -67,26 +124,26 @@ class WriteDoc
         $tmp_path = $this->tmp_path . '/' . $project;
         $dist_path = $this->dist_path . '/' . $project;
 
-        $this->clear_project_tmp($tmp_path);
-
-        if(is_dir($project_path . '/assets')){
+        // copy assets files
+        if (is_dir($project_path . '/assets')) {
             $this->copy_dir($project_path . '/assets', $dist_path);
         }
 
-        foreach ($config['include_pages'] as $page) {
-            $this->build_page($page, $project_path, $dist_path, $tmp_path, false, $config['layout']);
+        $this->clear_project_tmp($tmp_path);
+
+        $this->makeMenuData($project_path, $tmp_path, [$config['index_page']]);
+
+        foreach (glob($project_path . "/*.md") as $filename) {
+            $base_name = basename($filename, '.md');
+            $this->build_page($base_name, $project_path, $dist_path, $tmp_path, $config['layout']);
         }
-        $this->build_page($config['index_page'], $project_path, $dist_path, $tmp_path, true, $config['layout']);
 
         $used_time = microtime(true) - $start_time;
         return 'Build complete! Used ' . $used_time . ' second. At ' . date('Y-m-d H:i:s') . '.';
     }
 
-    protected function build_page($input, $src_path, $dst_path, $tmp_path, $is_index = false, $layout = 'main')
+    protected function build_page($input, $src_path, $dst_path, $tmp_path, $layout = 'main')
     {
-//        $src_path = realpath($src_path);
-//        $dst_path = realpath($dst_path);
-//        $tmp_path = realpath($tmp_path);
         if (!is_dir($dst_path)) {
             @mkdir($dst_path, 0755, true);
         }
@@ -109,18 +166,6 @@ class WriteDoc
 
         $content = file_get_contents($src);
 
-        if ($is_index) {
-            $dh = opendir($tmp_path);
-            $menu_src = '';
-            while (($file = readdir($dh)) !== false) {
-                if (strpos($file, '_menu_') === 0) {
-                    $menu_src .= file_get_contents($tmp_path . '/' . $file);
-                }
-            }
-            closedir($dh);
-            $content = str_replace('<!--{{menu}}-->', $menu_src, $content);
-        }
-
         $parser = new GithubMarkdown();
         $parser->html5 = true;
         $content = $parser->parse($content);
@@ -129,36 +174,25 @@ class WriteDoc
 
         $html = preg_replace('#({{content}})#U', $content, $html);
 
-        if (!$is_index) {  //读取目录
-            $dom = new \DOMDocument();
-            $dom->loadHTML($html);
-            $menu = '';
-            $h2 = $dom->getElementsByTagName('h2')[0];
+        if (strpos($html, '{{menu}}') !== false) {
+            $menu_src = $this->getMenuData($tmp_path);
+            $menu_data = $parser->parse($menu_src);
+            $html = preg_replace('#({{menu}})#U', $menu_data, $html);
+        }
+
+        $dom = new \DOMDocument();
+        $dom->loadHTML($html);
+        $h2 = $dom->getElementsByTagName('h2')[0] ?? null;
+        if ($h2) {
             $title = $h2->textContent;
             $h2->setAttribute('id', urlencode($title));
-            //$h2->setAttribute('id', base64_encode($title));
-            $number = '';
-            if (preg_match("#^([0-9\.]+)\s#", $title, $matches)) {
-                $number = trim($matches[0]);
-                $title = str_replace($number, '', $title);
-            }
-
-            $menu .= strlen($number) > 0 ? $number . ' [' . $title . '](' . $input . '.html)' . PHP_EOL : '* [' . $title . '](' . $input . '.html)' . PHP_EOL;
-
-            foreach ($dom->getElementsByTagName('h3') as $h3) {
-                $menu .= '    * [' . $h3->textContent . '](' . $input . '.html#' . urlencode($h3->textContent) . ')' . PHP_EOL;
-                $h3->setAttribute('id', urlencode($h3->textContent));
-//                $menu .= '    * [' . $h3->textContent . '](' . $input . '.html#' . base64_encode($h3->textContent) . ')' . PHP_EOL;
-//                $h3->setAttribute('id', base64_encode($h3->textContent));
-            }
-            $dom->saveHTMLFile($dst);
-            file_put_contents($tmp_path . '/_menu_' . $number . $input . '.md', $menu);
-            $response = file_get_contents($dst);
-        } else {
-            file_put_contents($dst, $html);
-            $response = $html;
         }
-        return $response;
+
+        foreach ($dom->getElementsByTagName('h3') as $h3) {
+            $h3->setAttribute('id', urlencode($h3->textContent));
+        }
+        return $dom->saveHTMLFile($dst);
+        //return file_get_contents($dst);
     }
 
     protected function clear_project_tmp($project_tmp_path)

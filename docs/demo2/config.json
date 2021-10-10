@@ -2,8 +2,5 @@
   "layout": "main",
   "dst_path": ".",
   "index_page": "index",
-  "base_url": "",
-  "include_pages": [
-    "user", "other"
-  ]
+  "base_url": ""
 }
