@@ -30,11 +30,8 @@ $watcher = new ResourceWatcher($resourceCache, $finder, $hashContent);
 $watcher->initialize();
 
 while (1) {
-//    $result = $watcher->findChanges();
-//    $result->getUpdatedFiles());
     if ($watcher->findChanges()->hasChanges()) {
         echo exec('php builder.php ' . $project, $output, $result_code) . PHP_EOL;
-        //echo "\n".$output."\n";
     }
     echo "\r>_< ";
     sleep(1);
