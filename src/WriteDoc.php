@@ -143,7 +143,7 @@ class WriteDoc
         }
 
         $used_time = microtime(true) - $start_time;
-        return 'Build complete! Used ' . $used_time . ' second. At ' . date('Y-m-d H:i:s') . '.';
+        return '✅ Build complete! Used ' . $used_time . ' second. At ' . date('Y-m-d H:i:s') . '.';
     }
 
     protected function build_page($input, $src_path, $dst_path, $tmp_path, $layout = 'main')
