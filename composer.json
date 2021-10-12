@@ -13,7 +13,8 @@
         "php": ">= 7.0",
         "ext-json": "*",
         "ext-dom": "*",
-        "cebe/markdown": "^1.2"
+        "cebe/markdown": "^1.2",
+        "yosymfony/resource-watcher": "^3.0"
     },
     "autoload": {
         "psr-4": {
