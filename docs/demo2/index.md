@@ -1,8 +1,8 @@
 # API文档
 
 > version: v1.0
-> 接口地址： 
-  - 测试环境: http://api.example.com/
+> 
+> 测试环境接口地址: http://api.example.com/
 
 ## 文档说明
 ### APP接口固定参数
